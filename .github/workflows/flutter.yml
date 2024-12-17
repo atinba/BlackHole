@@ -5,26 +5,25 @@ on:
     branches:
       - main
 
-env:
-  JAVA_VERSION: "12.x"
-  FLUTTER_CHANNEL: "stable"
-  PROPERTIES_PATH: "./android/key.properties"
+# env:
+#   JAVA_VERSION: "12.x"
+#   FLUTTER_CHANNEL: "stable"
+#   PROPERTIES_PATH: "./android/key.properties"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-
-      # Setup Java environment in order to build the Android app.
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
-          java-version: ${{env.JAVA_VERSION}}
-          cache: "gradle"
+          distribution: 'oracle'
+          java-version: '17'
+          cache: 'gradle'
 
       # Gradle cache for faster builds
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -36,15 +35,14 @@ jobs:
       # Setup the flutter environment.
       - uses: subosito/flutter-action@v2
         with:
-          channel: ${{env.FLUTTER_CHANNEL}}
           cache: true
       
-      - run: |
-          echo storePassword=${{ secrets.STORE_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-          echo keyPassword=${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-          echo keyAlias=${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
-          echo storeFile=/home/runner/work/BlackHole/BlackHole/android/app/keystore.jks >> ${{env.PROPERTIES_PATH}}
-          echo ${{ secrets.KEYSTORE }} | base64 --decode > /home/runner/work/BlackHole/BlackHole/android/app/keystore.jks
+      # - run: |
+      #     echo storePassword=${{ secrets.STORE_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+      #     echo keyPassword=${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+      #     echo keyAlias=${{ secrets.KEY_ALIAS }} >> ${{env.PROPERTIES_PATH}}
+      #     echo storeFile=/home/runner/work/BlackHole/BlackHole/android/app/keystore.jks >> ${{env.PROPERTIES_PATH}}
+      #     echo ${{ secrets.KEYSTORE }} | base64 --decode > /home/runner/work/BlackHole/BlackHole/android/app/keystore.jks
 
       # Get flutter dependencies.
       - run: flutter pub get
@@ -71,28 +69,3 @@ jobs:
         with:
           name: app-armeabi-v7a-release.apk
           path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-
-      - name: Commit on Telegram
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          format: markdown
-          disable_web_page_preview: true
-          message: |
-            New commit pushed to [${{ github.event.repository.name }}](${{ github.event.repository.html_url }}) by [${{ github.event.head_commit.author.name }}](${{ github.event.head_commit.author.html_url }}).
-            Commit message: ${{ github.event.head_commit.message }}
-          document: build/app/outputs/apk/release/app-arm64-v8a-release.apk, build/app/outputs/apk/release/app-armeabi-v7a-release.apk
-
-      - name: Report failure on Telegram
-        uses: appleboy/telegram-action@master
-        if: ${{ failure() }}
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          format: markdown
-          disable_web_page_preview: true
-          message: |
-            Build Failed!! @Sangwan5688
-            Commit was pushed to [${{ github.event.repository.name }}](${{ github.event.repository.html_url }}) by [${{ github.event.head_commit.author.name }}](${{ github.event.head_commit.author.html_url }}).
-            Commit message: ${{ github.event.head_commit.message }}
