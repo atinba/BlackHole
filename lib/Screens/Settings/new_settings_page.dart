@@ -236,6 +236,7 @@ class _NewSettingsPageState extends State<NewSettingsPage>
           AppLocalizations.of(context)!.downFilename,
           AppLocalizations.of(context)!.ytDownQuality,
           AppLocalizations.of(context)!.createAlbumFold,
+          AppLocalizations.of(context)!.numberAlbumSongs,
           AppLocalizations.of(context)!.createYtFold,
           AppLocalizations.of(context)!.downLyrics,
         ],
