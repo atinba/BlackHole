@@ -176,7 +176,7 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
           'player | unidentified network connection',
         );
       }
-    });
+    } as void Function(List<ConnectivityResult> event)?);
 
     preferredMobileQuality = Hive.box('settings')
         .get('streamingQuality', defaultValue: '96 kbps')

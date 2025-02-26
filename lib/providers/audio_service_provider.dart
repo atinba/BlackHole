@@ -37,7 +37,7 @@ class AudioHandlerHelper {
     audioHandler = await AudioService.init(
       builder: () => AudioPlayerHandlerImpl(),
       config: AudioServiceConfig(
-        androidNotificationChannelId: 'org.brightdv.blackhole.channel.audio',
+        androidNotificationChannelId: 'org.xf.singularity.channel.audio',
         androidNotificationChannelName: 'BlackHole',
         androidNotificationIcon: 'drawable/ic_stat_music_note',
         androidShowNotificationBadge: true,

@@ -1,4 +1,4 @@
-package org.brightdv.blackhole
+package org.xf.singularity
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider

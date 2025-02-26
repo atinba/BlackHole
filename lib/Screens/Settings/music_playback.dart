@@ -2,7 +2,6 @@ import 'package:blackhole/CustomWidgets/box_switch_tile.dart';
 import 'package:blackhole/CustomWidgets/gradient_containers.dart';
 import 'package:blackhole/CustomWidgets/snackbar.dart';
 import 'package:blackhole/Screens/Home/saavn.dart' as home_screen;
-import 'package:blackhole/Screens/Top Charts/top.dart' as top_screen;
 import 'package:blackhole/constants/countrycodes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -509,19 +508,14 @@ class SpotifyCountry {
                     value: countries[idx],
                     groupValue: region,
                     onChanged: (value) {
-                      top_screen.localSongs = [];
                       region = countries[idx];
-                      top_screen.localFetched = false;
-                      top_screen.localFetchFinished.value = false;
                       Hive.box('settings').put('region', region);
                       Navigator.pop(context);
                     },
                   ),
                   selected: region == countries[idx],
                   onTap: () {
-                    top_screen.localSongs = [];
                     region = countries[idx];
-                    top_screen.localFetchFinished.value = false;
                     Hive.box('settings').put('region', region);
                     Navigator.pop(context);
                   },

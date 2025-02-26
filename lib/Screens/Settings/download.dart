@@ -42,7 +42,7 @@ class _DownloadPageState extends State<DownloadPage> {
   String ytDownloadQuality = Hive.box('settings')
       .get('ytDownloadQuality', defaultValue: 'High') as String;
   int downFilename =
-      Hive.box('settings').get('downFilename', defaultValue: 0) as int;
+      Hive.box('settings').get('downFilename', defaultValue: 1) as int;
 
   @override
   Widget build(BuildContext context) {

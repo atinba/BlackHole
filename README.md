@@ -9,30 +9,9 @@
 
 An Open-Source Music Player App for all your needs!
 
-[![made-with-flutter](https://img.shields.io/badge/Made%20with-Flutter-1f425f.svg)](https://flutter.dev/) ![Release](https://img.shields.io/github/v/release/BrightDV/BlackHole) ![Downloads](https://img.shields.io/github/downloads/BrightDV/BlackHole/total)
-[![Build](https://github.com/BrightDV/BlackHole/actions/workflows/flutter.yml/badge.svg)](https://github.com/BrightDV/BlackHole/actions/workflows/flutter.yml)
+[![made-with-flutter](https://img.shields.io/badge/Made%20with-Flutter-1f425f.svg)](https://flutter.dev/) ![Release](https://img.shields.io/github/v/release/atinba/BlackHole) ![Downloads](https://img.shields.io/github/downloads/atinba/BlackHole/total)
+[![Build](https://github.com/atinba/BlackHole/actions/workflows/flutter.yml/badge.svg)](https://github.com/atinba/BlackHole/actions/workflows/flutter.yml)
 [![Translation-Status](https://hosted.weblate.org/widgets/blackhole/-/translations/svg-badge.svg)](https://hosted.weblate.org/engage/blackhole/)
-
-### Don't forget to :star: the repo
-
-[![GitHub stars](https://img.shields.io/github/stars/BrightDV/BlackHole.svg?style=social&label=Star)](https://github.com//BrightDV/BlackHole) ![GitHub forks](https://img.shields.io/github/forks/BrightDV/BlackHole.svg?style=social&label=Forks) ![GitHub followers](https://img.shields.io/github/followers/BrightDV.svg?style=social&label=Follow)
-
-## Download
-### Android only
-
-[<img src="get-it-on-github.png"
-     alt="Download from GitHub"
-     height="80">](https://github.com/BrightDV/BlackHole/releases/latest)
-
-## Translations
-- [Turkish :tr:](/README.TR.md)
-- [Spanish :es:](/README.ES.md)
-- [Russian :ru:](/README.RU.md)
-- [French :fr:](/README.FR.md)
-- [Portuguese :brazil:](/README.PT.md)
-- [Japanese :jp:](/README.JA.md)
-- [Belarusian :belarus:](/README.BE.md)
-- [Indonesian :indonesia:](/README.ID.md)
 
 ## Features
 
@@ -74,17 +53,10 @@ An Open-Source Music Player App for all your needs!
 and much more...
 Check it yourself :)
 
-## Screenshots
-
-> [!NOTE] 
-> The screenshots are not updated. Now the miniplayer has color, as well as the player's buttons (among other changes).
-
-<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/1.png?raw=true" width="32%"> <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/2.png?raw=true" width="32%"> <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/3.png?raw=true" width="32%"> <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/4.png?raw=true" width="32%"> <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/5.png?raw=true" width="32%"> <img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/6.png?raw=true" width="32%">
-
 ## License
 
 ```
-Copyright © 2024 BrightDV
+Copyright © 2024 atinba
 
 BlackHole is a free software licensed under GPL v3.0
 It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
@@ -116,7 +88,7 @@ See the [GNU General Public License](./LICENSE) for more details.
 2. Fetch latest source code from master branch.
 
 ```
-git clone https://github.com/BrightDV/BlackHole.git
+git clone https://github.com/atinba/BlackHole.git
 ```
 
 3. Run the app with Android Studio or VS Code. Or the command line:
@@ -132,11 +104,11 @@ Contributions are welcome. Please read our [contributing guidelines](./CONTRIBUT
 
 ## Facing any Issue?
 
-Have a look at some [common Issues](https://github.com/BrightDV/BlackHole/wiki/Common-Issues) that you might face. If your problem is not there, feel free to open an Issue :)
+Have a look at some [common Issues](https://github.com/atinba/BlackHole/wiki/Common-Issues) that you might face. If your problem is not there, feel free to open an Issue :)
 
 ## What's New
 
-To read full changelog visit the [wiki page](https://github.com/BrightDV/BlackHole/wiki/Changelog)
+To read full changelog visit the [wiki page](https://github.com/atinba/BlackHole/wiki/Changelog)
 
 
 ## Disclaimer

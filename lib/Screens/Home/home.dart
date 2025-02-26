@@ -23,12 +23,9 @@ import 'package:blackhole/CustomWidgets/bottom_nav_bar.dart';
 import 'package:blackhole/CustomWidgets/drawer.dart';
 import 'package:blackhole/CustomWidgets/gradient_containers.dart';
 import 'package:blackhole/CustomWidgets/miniplayer.dart';
-import 'package:blackhole/CustomWidgets/snackbar.dart';
 import 'package:blackhole/Helpers/backup_restore.dart';
 import 'package:blackhole/Helpers/downloads_checker.dart';
-import 'package:blackhole/Helpers/github.dart';
 import 'package:blackhole/Helpers/route_handler.dart';
-import 'package:blackhole/Helpers/update.dart';
 import 'package:blackhole/Screens/Common/routes.dart';
 import 'package:blackhole/Screens/Home/home_screen.dart';
 import 'package:blackhole/Screens/Library/library.dart';
@@ -36,18 +33,13 @@ import 'package:blackhole/Screens/LocalMusic/downed_songs.dart';
 import 'package:blackhole/Screens/LocalMusic/downed_songs_desktop.dart';
 import 'package:blackhole/Screens/Player/audioplayer.dart';
 import 'package:blackhole/Screens/Settings/new_settings_page.dart';
-import 'package:blackhole/Screens/Top Charts/top.dart';
-import 'package:blackhole/Screens/YouTube/youtube_home.dart';
 import 'package:blackhole/Services/ext_storage_provider.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:logging/logging.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -65,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       Hive.box('settings').get('autoBackup', defaultValue: false) as bool;
   List sectionsToShow = Hive.box('settings').get(
     'sectionsToShow',
-    defaultValue: ['Home', 'Top Charts', 'YouTube', 'Library'],
+    defaultValue: ['Home', 'Library'],
   ) as List;
   DateTime? backButtonPressTime;
   final bool useDense = Hive.box('settings').get(
@@ -76,7 +68,7 @@ class _HomePageState extends State<HomePage> {
   void callback() {
     sectionsToShow = Hive.box('settings').get(
       'sectionsToShow',
-      defaultValue: ['Home', 'Top Charts', 'YouTube', 'Library'],
+      defaultValue: ['Home', 'Library'],
     ) as List;
     onItemTapped(0);
     setState(() {});
@@ -113,55 +105,6 @@ class _HomePageState extends State<HomePage> {
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       appVersion = packageInfo.version;
 
-      if (checkUpdate) {
-        Logger.root.info('Checking for update');
-        GitHub.getLatestVersion().then((String version) async {
-          if (compareVersion(
-            version,
-            appVersion!,
-          )) {
-            Logger.root.info('Update available');
-            ShowSnackBar().showSnackBar(
-              context,
-              AppLocalizations.of(context)!.updateAvailable,
-              duration: const Duration(seconds: 15),
-              action: SnackBarAction(
-                textColor: Theme.of(context).colorScheme.secondary,
-                label: AppLocalizations.of(context)!.update,
-                onPressed: () async {
-                  String arch = '';
-                  if (Platform.isAndroid) {
-                    List? abis = await Hive.box('settings').get('supportedAbis')
-                        as List?;
-
-                    if (abis == null) {
-                      final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-                      final AndroidDeviceInfo androidDeviceInfo =
-                          await deviceInfo.androidInfo;
-                      abis = androidDeviceInfo.supportedAbis;
-                      await Hive.box('settings').put('supportedAbis', abis);
-                    }
-                    if (abis.contains('arm64')) {
-                      arch = 'arm64';
-                    } else if (abis.contains('armeabi')) {
-                      arch = 'armeabi';
-                    }
-                  }
-                  Navigator.pop(context);
-                  launchUrl(
-                    Uri.parse(
-                      'https://BrightDV.github.io/download?platform=${Platform.operatingSystem}&arch=$arch',
-                    ),
-                    mode: LaunchMode.externalApplication,
-                  );
-                },
-              ),
-            );
-          } else {
-            Logger.root.info('No update available');
-          }
-        });
-      }
       if (autoBackup) {
         final List<String> checked = [
           AppLocalizations.of(
@@ -560,18 +503,6 @@ class _HomePageState extends State<HomePage> {
                             icon: const Icon(Icons.home_rounded),
                             label: Text(AppLocalizations.of(context)!.home),
                           );
-                        case 'Top Charts':
-                          return NavigationRailDestination(
-                            icon: const Icon(Icons.trending_up_rounded),
-                            label: Text(
-                              AppLocalizations.of(context)!.topCharts,
-                            ),
-                          );
-                        case 'YouTube':
-                          return NavigationRailDestination(
-                            icon: const Icon(MdiIcons.youtube),
-                            label: Text(AppLocalizations.of(context)!.youTube),
-                          );
                         case 'Library':
                           return NavigationRailDestination(
                             icon: const Icon(Icons.my_library_music_rounded),
@@ -653,40 +584,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                         screen: const HomeScreen(),
                       );
-                    case 'Top Charts':
-                      return CustomNavBarScreen(
-                        routeAndNavigatorSettings: RouteAndNavigatorSettings(
-                          routes: namedRoutes,
-                          onGenerateRoute: (RouteSettings settings) {
-                            if (settings.name == '/player') {
-                              return PageRouteBuilder(
-                                opaque: false,
-                                pageBuilder: (_, __, ___) => const PlayScreen(),
-                              );
-                            }
-                            return HandleRoute.handleRoute(settings.name);
-                          },
-                        ),
-                        screen: TopCharts(
-                          pageController: _pageController,
-                        ),
-                      );
-                    case 'YouTube':
-                      return CustomNavBarScreen(
-                        routeAndNavigatorSettings: RouteAndNavigatorSettings(
-                          routes: namedRoutes,
-                          onGenerateRoute: (RouteSettings settings) {
-                            if (settings.name == '/player') {
-                              return PageRouteBuilder(
-                                opaque: false,
-                                pageBuilder: (_, __, ___) => const PlayScreen(),
-                              );
-                            }
-                            return HandleRoute.handleRoute(settings.name);
-                          },
-                        ),
-                        screen: const YouTube(),
-                      );
                     case 'Library':
                       return CustomNavBarScreen(
                         routeAndNavigatorSettings: RouteAndNavigatorSettings(
@@ -736,18 +633,6 @@ class _HomePageState extends State<HomePage> {
           return CustomBottomNavBarItem(
             icon: const Icon(Icons.home_rounded),
             title: Text(AppLocalizations.of(context)!.home),
-            selectedColor: Theme.of(context).colorScheme.secondary,
-          );
-        case 'Top Charts':
-          return CustomBottomNavBarItem(
-            icon: const Icon(Icons.trending_up_rounded),
-            title: Text(AppLocalizations.of(context)!.topCharts),
-            selectedColor: Theme.of(context).colorScheme.secondary,
-          );
-        case 'YouTube':
-          return CustomBottomNavBarItem(
-            icon: const Icon(MdiIcons.youtube),
-            title: Text(AppLocalizations.of(context)!.youTube),
             selectedColor: Theme.of(context).colorScheme.secondary,
           );
         case 'Library':

@@ -19,7 +19,6 @@
 
 import 'package:blackhole/CustomWidgets/drawer.dart';
 import 'package:blackhole/CustomWidgets/gradient_containers.dart';
-import 'package:blackhole/Screens/Settings/about.dart';
 import 'package:blackhole/Screens/Settings/app_ui.dart';
 import 'package:blackhole/Screens/Settings/backup_and_restore.dart';
 import 'package:blackhole/Screens/Settings/download.dart';
@@ -46,7 +45,7 @@ class _NewSettingsPageState extends State<NewSettingsPage>
   final ValueNotifier<String> searchQuery = ValueNotifier<String>('');
   final List sectionsToShow = Hive.box('settings').get(
     'sectionsToShow',
-    defaultValue: ['Home', 'Top Charts', 'YouTube', 'Library'],
+    defaultValue: ['Home', 'Library'],
   ) as List;
 
   @override
@@ -278,24 +277,6 @@ class _NewSettingsPageState extends State<NewSettingsPage>
           AppLocalizations.of(context)!.restore,
           AppLocalizations.of(context)!.autoBack,
           AppLocalizations.of(context)!.autoBackLocation,
-        ],
-      },
-      {
-        'title': AppLocalizations.of(
-          context,
-        )!
-            .about,
-        'icon': Icons.info_outline_rounded,
-        'onTap': const AboutPage(),
-        'isThreeLine': false,
-        'items': [
-          AppLocalizations.of(context)!.version,
-          AppLocalizations.of(context)!.shareApp,
-          AppLocalizations.of(context)!.contactUs,
-          AppLocalizations.of(context)!.likedWork,
-          AppLocalizations.of(context)!.donateGpay,
-          AppLocalizations.of(context)!.joinTg,
-          AppLocalizations.of(context)!.moreInfo,
         ],
       },
     ];

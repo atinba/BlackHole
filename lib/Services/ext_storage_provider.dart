@@ -52,7 +52,7 @@ class ExtStorageProvider {
 
           // getting main path
           final String newPath = directory!.path.replaceFirst(
-            'Android/data/org.brightdv.blackhole/files',
+            'Android/data/org.xf.singularity/files',
             dirName,
           );
 
