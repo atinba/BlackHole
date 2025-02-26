@@ -132,45 +132,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15.0,
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    ValueListenableBuilder(
-                                      valueListenable: Hive.box(
-                                        'settings',
-                                      ).listenable(),
-                                      builder: (
-                                        BuildContext context,
-                                        Box box,
-                                        Widget? child,
-                                      ) {
-                                        return Text(
-                                          (box.get('name') == null ||
-                                                  box.get('name') == '')
-                                              ? 'Guest'
-                                              : box
-                                                  .get(
-                                                    'name',
-                                                  )
-                                                  .split(
-                                                    ' ',
-                                                  )[0]
-                                                  .toString(),
-                                          style: const TextStyle(
-                                            letterSpacing: 2,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ],
                           ),
                         ),
