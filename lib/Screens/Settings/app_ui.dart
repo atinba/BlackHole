@@ -529,7 +529,6 @@ class _AppUIPageState extends State<AppUIPage> {
                 final GlobalKey<AnimatedListState> listKey =
                     GlobalKey<AnimatedListState>();
                 showModalBottomSheet(
-                  isDismissible: true,
                   backgroundColor: Colors.transparent,
                   context: context,
                   builder: (BuildContext context) {

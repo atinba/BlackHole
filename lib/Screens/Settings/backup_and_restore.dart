@@ -87,7 +87,6 @@ class _BackupAndRestorePageState extends State<BackupAndRestorePage> {
               dense: true,
               onTap: () {
                 showModalBottomSheet(
-                  isDismissible: true,
                   backgroundColor: Colors.transparent,
                   context: context,
                   builder: (BuildContext context) {

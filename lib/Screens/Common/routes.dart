@@ -17,7 +17,6 @@
  * Copyright (c) 2021-2023, Ankit Sangwan
  */
 
-import 'package:blackhole/Screens/About/about.dart';
 import 'package:blackhole/Screens/Home/home.dart';
 import 'package:blackhole/Screens/Library/downloads.dart';
 import 'package:blackhole/Screens/Library/nowplaying.dart';
@@ -38,7 +37,6 @@ final Map<String, Widget Function(BuildContext)> namedRoutes = {
   '/': (context) => initialFuntion(),
   '/pref': (context) => const PrefScreen(),
   '/setting': (context) => const NewSettingsPage(),
-  '/about': (context) => AboutScreen(),
   '/playlists': (context) => PlaylistScreen(),
   '/nowplaying': (context) => NowPlaying(),
   '/recent': (context) => RecentlyPlayed(),

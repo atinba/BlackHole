@@ -512,7 +512,8 @@ class _SongsListPageState extends State<SongsListPage> {
                                               return GestureDetector(
                                                 onLongPress: () {
                                                   Feedback.forLongPress(
-                                                      context);
+                                                    context,
+                                                  );
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
@@ -522,7 +523,8 @@ class _SongsListPageState extends State<SongsListPage> {
                                                             GestureDetector(
                                                               onTap: () =>
                                                                   Navigator.pop(
-                                                                      context),
+                                                                context,
+                                                              ),
                                                             ),
                                                             AlertDialog(
                                                               shape:
@@ -530,7 +532,8 @@ class _SongsListPageState extends State<SongsListPage> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            15.0),
+                                                                  15.0,
+                                                                ),
                                                               ),
                                                               backgroundColor:
                                                                   Colors
@@ -585,7 +588,8 @@ class _SongsListPageState extends State<SongsListPage> {
                                                     child: imageCard(
                                                       margin:
                                                           const EdgeInsets.all(
-                                                              4.0),
+                                                        4.0,
+                                                      ),
                                                       borderRadius: 10.0,
                                                       imageUrl: item['image']
                                                           .toString(),

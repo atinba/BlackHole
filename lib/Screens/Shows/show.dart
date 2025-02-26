@@ -234,7 +234,7 @@ class EpisodesList extends StatelessWidget {
                           textAlign: TextAlign.justify,
                         ),
                       ),
-                    )
+                    ),
               ],
             ),
           ),

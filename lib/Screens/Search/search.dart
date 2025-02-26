@@ -408,7 +408,8 @@ class _SearchPageState extends State<SearchPage> {
                                                       GestureDetector(
                                                         onTap: () =>
                                                             Navigator.pop(
-                                                                context),
+                                                          context,
+                                                        ),
                                                       ),
                                                       AlertDialog(
                                                         shape:
@@ -432,8 +433,8 @@ class _SearchPageState extends State<SearchPage> {
                                                               ImageQuality.high,
                                                           boxDimension:
                                                               MediaQuery.sizeOf(
-                                                                          context)
-                                                                      .width *
+                                                                    context,
+                                                                  ).width *
                                                                   0.8,
                                                           placeholderImage: (value[
                                                                               index]
@@ -650,8 +651,10 @@ class _SearchPageState extends State<SearchPage> {
                                                                 style:
                                                                     TextStyle(
                                                                   fontSize: 11,
-                                                                  color: Theme.of(
-                                                                          context)
+                                                                  color: Theme
+                                                                          .of(
+                                                                    context,
+                                                                  )
                                                                       .textTheme
                                                                       .bodySmall!
                                                                       .color,

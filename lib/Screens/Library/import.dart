@@ -414,7 +414,6 @@ Future<void> fetchPlaylists(
   final List spotifyPlaylists =
       await SpotifyApi().getUserPlaylists(accessToken);
   showModalBottomSheet(
-    isDismissible: true,
     backgroundColor: Colors.transparent,
     context: context,
     builder: (BuildContext contxt) {

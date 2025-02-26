@@ -54,7 +54,7 @@ class BoxSwitchTile extends StatelessWidget {
             dense: true,
             contentPadding: contentPadding,
             trailing: CupertinoSwitch(
-              activeColor: Theme.of(context).colorScheme.secondary,
+              activeTrackColor: Theme.of(context).colorScheme.secondary,
               value: box.get(keyName, defaultValue: defaultValue) as bool? ??
                   defaultValue,
               onChanged: (val) {

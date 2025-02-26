@@ -154,29 +154,31 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
 
     Logger.root.info('checking connectivity & setting quality');
 
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if (result == ConnectivityResult.mobile) {
-        connectionType = 'mobile';
-        Logger.root.info(
-          'player | switched to mobile data, changing quality to $preferredMobileQuality',
+    Connectivity().onConnectivityChanged.listen(
+          (ConnectivityResult result) {
+            if (result == ConnectivityResult.mobile) {
+              connectionType = 'mobile';
+              Logger.root.info(
+                'player | switched to mobile data, changing quality to $preferredMobileQuality',
+              );
+              preferredQuality = preferredMobileQuality;
+            } else if (result == ConnectivityResult.wifi) {
+              connectionType = 'wifi';
+              Logger.root.info(
+                'player | wifi connected, changing quality to $preferredWifiQuality',
+              );
+              preferredQuality = preferredWifiQuality;
+            } else if (result == ConnectivityResult.none) {
+              Logger.root.severe(
+                'player | internet connection not available',
+              );
+            } else {
+              Logger.root.info(
+                'player | unidentified network connection',
+              );
+            }
+          } as void Function(List<ConnectivityResult> event)?,
         );
-        preferredQuality = preferredMobileQuality;
-      } else if (result == ConnectivityResult.wifi) {
-        connectionType = 'wifi';
-        Logger.root.info(
-          'player | wifi connected, changing quality to $preferredWifiQuality',
-        );
-        preferredQuality = preferredWifiQuality;
-      } else if (result == ConnectivityResult.none) {
-        Logger.root.severe(
-          'player | internet connection not available',
-        );
-      } else {
-        Logger.root.info(
-          'player | unidentified network connection',
-        );
-      }
-    } as void Function(List<ConnectivityResult> event)?);
 
     preferredMobileQuality = Hive.box('settings')
         .get('streamingQuality', defaultValue: '96 kbps')
