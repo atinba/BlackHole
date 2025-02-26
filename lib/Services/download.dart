@@ -67,8 +67,8 @@ class Download with ChangeNotifier {
       .get('createDownloadFolder', defaultValue: false) as bool;
   bool createYoutubeFolder = Hive.box('settings')
       .get('createYoutubeFolder', defaultValue: false) as bool;
-  bool numberSongTitlsInAlbum = Hive.box('settings')
-      .get('numberAlbumSongs', defaultValue: false) as bool;
+  bool numberSongTitlsInAlbum =
+      Hive.box('settings').get('numberAlbumSongs', defaultValue: false) as bool;
   double? progress = 0.0;
   String lastDownloadId = '';
   bool downloadLyrics =
@@ -114,8 +114,11 @@ class Download with ChangeNotifier {
       filename = '${data["title"]}';
     }
 
-    if (data.containsKey('trackNumber') && createDownloadFolder && numberSongTitlsInAlbum) {
-      filename = "${data["trackNumber"].toString().padLeft(2, '0')} - ${data["title"]!}";
+    if (data.containsKey('trackNumber') &&
+        createDownloadFolder &&
+        numberSongTitlsInAlbum) {
+      filename =
+          "${data["trackNumber"].toString().padLeft(2, '0')} - ${data["title"]!}";
     }
     // String filename = '${data["title"]} - ${data["artist"]}';
     String dlPath =

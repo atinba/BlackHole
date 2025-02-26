@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - main
+      - release
 
 # env:
 #   JAVA_VERSION: "12.x"
