@@ -17,11 +17,9 @@ class MusicPlaybackPage extends StatefulWidget {
 
 class _MusicPlaybackPageState extends State<MusicPlaybackPage> {
   String streamingMobileQuality = Hive.box('settings')
-      .get('streamingQuality', defaultValue: '96 kbps') as String;
-  String streamingWifiQuality = Hive.box('settings')
-      .get('streamingWifiQuality', defaultValue: '320 kbps') as String;
+      .get('streamingQuality', defaultValue: '320 kbps') as String;
   String ytQuality =
-      Hive.box('settings').get('ytQuality', defaultValue: 'Low') as String;
+      Hive.box('settings').get('ytQuality', defaultValue: 'High') as String;
   String region =
       Hive.box('settings').get('region', defaultValue: 'India') as String;
   List<String> languages = [
@@ -282,48 +280,6 @@ class _MusicPlaybackPageState extends State<MusicPlaybackPage> {
                       () {
                         streamingMobileQuality = newValue;
                         Hive.box('settings').put('streamingQuality', newValue);
-                      },
-                    );
-                  }
-                },
-                items: <String>['96 kbps', '160 kbps', '320 kbps']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-              dense: true,
-            ),
-            ListTile(
-              title: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .streamWifiQuality,
-              ),
-              subtitle: Text(
-                AppLocalizations.of(
-                  context,
-                )!
-                    .streamWifiQualitySub,
-              ),
-              onTap: () {},
-              trailing: DropdownButton(
-                value: streamingWifiQuality,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Theme.of(context).textTheme.bodyLarge!.color,
-                ),
-                underline: const SizedBox(),
-                onChanged: (String? newValue) {
-                  if (newValue != null) {
-                    setState(
-                      () {
-                        streamingWifiQuality = newValue;
-                        Hive.box('settings')
-                            .put('streamingWifiQuality', newValue);
                       },
                     );
                   }
