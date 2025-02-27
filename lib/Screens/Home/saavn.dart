@@ -17,21 +17,14 @@
  * Copyright (c) 2021-2023, Ankit Sangwan
  */
 
-import 'dart:io';
 
 import 'package:blackhole/APIs/api.dart';
 import 'package:blackhole/CustomWidgets/collage.dart';
 import 'package:blackhole/CustomWidgets/horizontal_albumlist.dart';
 import 'package:blackhole/CustomWidgets/horizontal_albumlist_separated.dart';
-import 'package:blackhole/CustomWidgets/image_card.dart';
-import 'package:blackhole/CustomWidgets/like_button.dart';
 import 'package:blackhole/CustomWidgets/on_hover.dart';
-import 'package:blackhole/CustomWidgets/snackbar.dart';
-import 'package:blackhole/CustomWidgets/song_tile_trailing_menu.dart';
 import 'package:blackhole/Helpers/extensions.dart';
 import 'package:blackhole/Helpers/format.dart';
-import 'package:blackhole/Models/image_quality.dart';
-import 'package:blackhole/Screens/Common/song_list.dart';
 import 'package:blackhole/Screens/Library/liked.dart';
 import 'package:blackhole/Screens/Search/artists.dart';
 import 'package:blackhole/Services/player_service.dart';
@@ -410,6 +403,7 @@ class _SaavnHomePageState extends State<SaavnHomePage>
                         ],
                       );
               }
+              return null;
             },
           );
   }

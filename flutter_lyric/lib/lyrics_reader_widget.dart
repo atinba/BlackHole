@@ -174,7 +174,7 @@ class LyricReaderState extends State<LyricsReader>
         }
       });
     animate
-      ..addListener(() {
+      .addListener(() {
         var value = animate.value;
         lyricPaint.lyricOffset = value.clamp(lyricPaint.maxOffset, 0);
       });
@@ -214,12 +214,10 @@ class LyricReaderState extends State<LyricsReader>
   /// 获取文本高度
   TextPainter getTextPaint(String? text, TextStyle style,
       {Size? size, TextPainter? linePaint}) {
-    if (text == null) text = "";
-    if (linePaint == null) {
-      linePaint = TextPainter(
+    text ??= "";
+    linePaint ??= TextPainter(
         textDirection: TextDirection.ltr,
       );
-    }
     linePaint.textAlign = lyricPaint.lyricUI.getLyricTextAligin();
     linePaint
       ..text = TextSpan(text: text, style: style)
@@ -233,7 +231,7 @@ class LyricReaderState extends State<LyricsReader>
     var targetLineHeight = 0.0;
     var start = 0;
     List<LyricInlineDrawInfo> lineList = [];
-    metrics.forEach((element) {
+    for (var element in metrics) {
       //起始偏移量X
       var startOffsetX = 0.0;
       switch (ui.getLyricTextAligin()) {
@@ -270,7 +268,7 @@ class LyricReaderState extends State<LyricsReader>
         ..offset = Offset(startOffsetX, targetLineHeight));
       start = end;
       targetLineHeight += element.height;
-    });
+    }
     drawInfo.inlineDrawList = lineList;
   }
 
@@ -405,7 +403,7 @@ class LyricReaderState extends State<LyricsReader>
     isWait = true;
     var waitSecond = 0;
     waitTimer?.cancel();
-    waitTimer = new Timer.periodic(Duration(milliseconds: 100), (timer) {
+    waitTimer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       waitSecond += 100;
       if (waitSecond == 400) {
         realUpdateOffset(widget.model?.computeScroll(
@@ -457,14 +455,14 @@ class LyricReaderState extends State<LyricsReader>
   void setTextSpanDrawInfo(
       LyricUI ui, List<LyricSpanInfo> spanList, TextPainter painter) {
     painter.textAlign = lyricPaint.lyricUI.getLyricTextAligin();
-    spanList.forEach((element) {
+    for (var element in spanList) {
       painter
         ..text =
             TextSpan(text: element.raw, style: ui.getPlayingMainTextStyle())
         ..layout();
       element.drawHeight = painter.height;
       element.drawWidth = painter.width;
-    });
+    }
   }
 
   /// enable highlight animation

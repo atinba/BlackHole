@@ -12,7 +12,7 @@ class LyricsLog {
   }
 
   static logW(Object? obj) {
-    _log(_defaultTag + "♦️WARN♦️->", obj);
+    _log("$_defaultTag♦️WARN♦️->", obj);
   }
 
   static _log(String tag, Object? obj) {

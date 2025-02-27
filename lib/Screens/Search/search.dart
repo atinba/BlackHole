@@ -17,8 +17,6 @@
  * Copyright (c) 2021-2023, Ankit Sangwan
  */
 
-import 'dart:io';
-
 import 'package:blackhole/APIs/api.dart';
 import 'package:blackhole/CustomWidgets/download_button.dart';
 import 'package:blackhole/CustomWidgets/empty_screen.dart';
@@ -26,13 +24,10 @@ import 'package:blackhole/CustomWidgets/gradient_containers.dart';
 import 'package:blackhole/CustomWidgets/image_card.dart';
 import 'package:blackhole/CustomWidgets/like_button.dart';
 import 'package:blackhole/CustomWidgets/media_tile.dart';
-import 'package:blackhole/CustomWidgets/on_hover.dart';
 import 'package:blackhole/CustomWidgets/search_bar.dart' as searchbar;
 import 'package:blackhole/CustomWidgets/snackbar.dart';
 import 'package:blackhole/CustomWidgets/song_tile_trailing_menu.dart';
 import 'package:blackhole/Helpers/extensions.dart';
-import 'package:blackhole/Helpers/format.dart';
-import 'package:blackhole/Models/image_quality.dart';
 import 'package:blackhole/Screens/Common/song_list.dart';
 import 'package:blackhole/Screens/Common/song_list_view.dart';
 import 'package:blackhole/Screens/Search/albums.dart';
@@ -161,10 +156,6 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  Future<void> getTrendingSearch() async {
-    topSearch.value = await SaavnAPI().getTopSearches();
-  }
-
   void addToHistory(String title) {
     final tempquery = title.trim();
     if (tempquery == '') {
@@ -252,7 +243,7 @@ class _SearchPageState extends State<SearchPage> {
     fromHome ??= widget.fromHome;
     if (!fetchResultCalled) {
       fetchResultCalled = true;
-      fromHome! ? getTrendingSearch() : fetchResults();
+      fetchResults();
     }
     double boxSize =
         MediaQuery.sizeOf(context).height > MediaQuery.sizeOf(context).width
@@ -302,13 +293,8 @@ class _SearchPageState extends State<SearchPage> {
                               searchHistory.length,
                               (int index) {
                                 return Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                     horizontal: 5.0,
-                                    vertical: (Platform.isWindows ||
-                                            Platform.isLinux ||
-                                            Platform.isMacOS)
-                                        ? 5.0
-                                        : 0.0,
                                   ),
                                   child: GestureDetector(
                                     child: Chip(
