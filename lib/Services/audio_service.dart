@@ -152,12 +152,12 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
     });
 
     preferredQuality = Hive.box('settings')
-        .get('streamingQuality', defaultValue: '96 kbps')
+        .get('streamingQuality', defaultValue: '320 kbps')
         .toString();
     resetOnSkip =
         Hive.box('settings').get('resetOnSkip', defaultValue: false) as bool;
     cacheSong =
-        Hive.box('settings').get('cacheSong', defaultValue: false) as bool;
+        Hive.box('settings').get('cacheSong', defaultValue: true) as bool;
     recommend =
         Hive.box('settings').get('autoplay', defaultValue: true) as bool;
     loadStart =
