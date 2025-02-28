@@ -173,11 +173,10 @@ class LyricReaderState extends State<LyricsReader>
           disposeLine();
         }
       });
-    animate
-      .addListener(() {
-        var value = animate.value;
-        lyricPaint.lyricOffset = value.clamp(lyricPaint.maxOffset, 0);
-      });
+    animate.addListener(() {
+      var value = animate.value;
+      lyricPaint.lyricOffset = value.clamp(lyricPaint.maxOffset, 0);
+    });
     _lineController?.forward();
   }
 
@@ -216,8 +215,8 @@ class LyricReaderState extends State<LyricsReader>
       {Size? size, TextPainter? linePaint}) {
     text ??= "";
     linePaint ??= TextPainter(
-        textDirection: TextDirection.ltr,
-      );
+      textDirection: TextDirection.ltr,
+    );
     linePaint.textAlign = lyricPaint.lyricUI.getLyricTextAligin();
     linePaint
       ..text = TextSpan(text: text, style: style)

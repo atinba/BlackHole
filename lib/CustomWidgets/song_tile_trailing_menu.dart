@@ -18,12 +18,13 @@
  */
 
 import 'package:audio_service/audio_service.dart';
+import 'package:blackhole/APIs/api.dart';
 import 'package:blackhole/CustomWidgets/add_playlist.dart';
 import 'package:blackhole/Helpers/add_mediaitem_to_queue.dart';
 import 'package:blackhole/Helpers/mediaitem_converter.dart';
 import 'package:blackhole/Helpers/radio.dart';
 import 'package:blackhole/Screens/Common/song_list.dart';
-import 'package:blackhole/Screens/Search/albums.dart';
+import 'package:blackhole/Screens/Search/artists.dart';
 import 'package:blackhole/Screens/Search/search.dart';
 import 'package:blackhole/Services/yt_music.dart';
 import 'package:flutter/cupertino.dart';
@@ -183,7 +184,7 @@ class _SongTileTrailingMenuState extends State<SongTileTrailingMenu> {
           ),
         ),
       ],
-      onSelected: (value) {
+      onSelected: (value) async {
         switch (value) {
           case 3:
             Share.share(widget.data['perma_url'].toString());
@@ -214,13 +215,16 @@ class _SongTileTrailingMenuState extends State<SongTileTrailingMenu> {
           case 2:
             playNext(mediaItem, context);
           default:
+            final artistInfo = (await SaavnAPI().getArtistInfoFromAlbumId(
+                mediaItem.extras?['album_id'] as String))['artist_info'] as Map;
+            artistInfo['title'] = artistInfo['name'];
             Navigator.push(
               context,
               PageRouteBuilder(
                 opaque: false,
-                pageBuilder: (_, __, ___) => AlbumSearchPage(
-                  query: value.toString(),
-                  type: 'Artists',
+                pageBuilder: (_, __, ___) => ArtistSearchPage(
+                  data: artistInfo,
+                  artistId: artistInfo['id'].toString(),
                 ),
               ),
             );
