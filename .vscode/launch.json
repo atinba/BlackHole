@@ -1,0 +1,27 @@
+{    
+    "configurations": [
+        {
+            "name": "Emulator - debug mode - w/ debugger",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--device-user=0"
+            ],
+            "flutterMode": "debug",
+            "deviceId": "sdk gphone64",
+        },
+        {
+            "name": "Emulator - debug mode - w/out debugger",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": [
+                "--device-user=0"
+            ],
+            "flutterMode": "debug",
+            "deviceId": "sdk gphone64",
+            "noDebug": true,
+        },
+    ],
+}
