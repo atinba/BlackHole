@@ -69,11 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ) {
               return <Widget>[
                 SliverAppBar(
-                  expandedHeight: 135,
+                  expandedHeight: 50,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   // pinned: true,
-                  toolbarHeight: 65,
+                  toolbarHeight: 50,
                   // floating: true,
                   automaticallyImplyLeading: false,
                   flexibleSpace: LayoutBuilder(
@@ -85,35 +85,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         titlePadding: EdgeInsets.zero,
                         // collapseMode: CollapseMode.parallax,
                         background: GestureDetector(
-                          onTap: () async {
-                            showTextInputDialog(
-                              context: context,
-                              title: 'Name',
-                              initialText: name,
-                              keyboardType: TextInputType.name,
-                              onSubmitted:
-                                  (String value, BuildContext context) {
-                                Hive.box('settings').put(
-                                  'name',
-                                  value.trim(),
-                                );
-                                name = value.trim();
-                                Navigator.pop(context);
-                              },
-                            );
-                            // setState(() {});
-                          },
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               const SizedBox(
-                                height: 60,
+                                height: 15,
                               ),
                               Row(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                      left: 15.0,
+                                      left: 45.0,
                                     ),
                                     child: Text(
                                       AppLocalizations.of(
@@ -145,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   stretch: true,
-                  toolbarHeight: 65,
+                  toolbarHeight: 50,
                   title: Align(
                     alignment: Alignment.centerRight,
                     child: AnimatedBuilder(
@@ -163,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MediaQuery.sizeOf(context).width -
                                         (rotated ? 0 : 75),
                                   ),
-                            height: 55.0,
+                            height: 50.0,
                             duration: const Duration(
                               milliseconds: 150,
                             ),

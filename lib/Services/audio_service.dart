@@ -157,9 +157,9 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
     resetOnSkip =
         Hive.box('settings').get('resetOnSkip', defaultValue: false) as bool;
     cacheSong =
-        Hive.box('settings').get('cacheSong', defaultValue: true) as bool;
+        Hive.box('settings').get('cacheSong', defaultValue: false) as bool;
     recommend =
-        Hive.box('settings').get('autoplay', defaultValue: true) as bool;
+        Hive.box('settings').get('autoplay', defaultValue: false) as bool;
     loadStart =
         Hive.box('settings').get('loadStart', defaultValue: true) as bool;
 
