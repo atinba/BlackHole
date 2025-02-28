@@ -215,9 +215,8 @@ class _SongTileTrailingMenuState extends State<SongTileTrailingMenu> {
           case 2:
             playNext(mediaItem, context);
           default:
-            final artistInfo = (await SaavnAPI().getArtistInfoFromAlbumId(
-                mediaItem.extras?['album_id'] as String))['artist_info'] as Map;
-            artistInfo['title'] = artistInfo['name'];
+            final artistInfo = await SaavnAPI().getArtistDetails(
+                mediaItem.extras?['album_id'] as String, value.toString(),);
             Navigator.push(
               context,
               PageRouteBuilder(

@@ -758,28 +758,39 @@ class SaavnAPI {
     return {};
   }
 
-  Future<Map> getArtistInfoFromAlbumId(String albumId) async {
+  Future<Map> getArtistsFromAlbumId(String albumId) async {
     final String params = '${endpoints['albumDetails']}&cc=in&albumid=$albumId';
     try {
       final res = await getResponse(params);
       if (res.statusCode == 200) {
         final getMain = json.decode(res.body);
         return {
-          'artist_info': getMain['more_info']['artistMap']['primary_artists']
-              [0],
+          'primary_artists': getMain['more_info']['artistMap']
+              ['primary_artists'],
           'error': '',
         };
       }
     } catch (e) {
-      Logger.root.severe('Error in getArtistInfoFromSong: $e');
+      Logger.root.severe('Error in getArtistsFromAlbumId: $e');
       return {
-        'songs': List.empty(),
+        'primary_artists': List.empty(),
         'error': e,
       };
     }
     return {
-      'songs': List.empty(),
+      'primary_artists': List.empty(),
       'error': '',
     };
+  }
+
+  Future<Map> getArtistDetails(String albumId, String artistName) async {
+    final primaryArtists =
+        (await getArtistsFromAlbumId(albumId))['primary_artists'] as List;
+
+    final artistInfo = primaryArtists.firstWhere(
+        (artist) => artist['name'].toString().trim() == artistName,) as Map;
+    artistInfo['title'] = artistInfo['name'];
+
+    return artistInfo;
   }
 }

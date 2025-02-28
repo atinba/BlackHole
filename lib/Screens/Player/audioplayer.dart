@@ -23,6 +23,7 @@ import 'dart:math';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiotagger/audiotagger.dart';
+import 'package:blackhole/APIs/api.dart';
 import 'package:blackhole/CustomWidgets/add_playlist.dart';
 import 'package:blackhole/CustomWidgets/animated_text.dart';
 import 'package:blackhole/CustomWidgets/copy_clipboard.dart';
@@ -40,7 +41,7 @@ import 'package:blackhole/Helpers/dominant_color.dart';
 import 'package:blackhole/Helpers/lyrics.dart';
 import 'package:blackhole/Helpers/mediaitem_converter.dart';
 import 'package:blackhole/Screens/Common/song_list.dart';
-import 'package:blackhole/Screens/Search/albums.dart';
+import 'package:blackhole/Screens/Search/artists.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -2098,7 +2099,7 @@ class NameNControls extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   ),
                   offset: const Offset(1.0, 0.0),
-                  onSelected: (String value) {
+                  onSelected: (String value) async {
                     if (value == '0') {
                       Navigator.push(
                         context,
@@ -2115,13 +2116,16 @@ class NameNControls extends StatelessWidget {
                         ),
                       );
                     } else {
+                      final artistInfo = await SaavnAPI().getArtistDetails(
+                          mediaItem.extras?['album_id'] as String,
+                          value,);
                       Navigator.push(
                         context,
                         PageRouteBuilder(
                           opaque: false,
-                          pageBuilder: (_, __, ___) => AlbumSearchPage(
-                            query: value,
-                            type: 'Artists',
+                          pageBuilder: (_, __, ___) => ArtistSearchPage(
+                            data: artistInfo,
+                            artistId: artistInfo['id'].toString(),
                           ),
                         ),
                       );
