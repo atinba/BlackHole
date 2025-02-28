@@ -22,6 +22,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - uses: cachix/install-nix-action@v30
       # Setup the flutter environment.
       - uses: nicknovitski/nix-develop@v1
       
