@@ -2,7 +2,7 @@
 Fork of BlackHole with stuff *removed*.
 
 ![Release](https://img.shields.io/github/v/release/atinba/Singularity) ![Downloads](https://img.shields.io/github/downloads/atinba/Singularity/total)
-[![Build](https://github.com/atinba/Singularity/actions/workflows/flutter.yml/badge.svg)](https://github.com/atinba/Singularity/actions/workflows/flutter.yml)
+[![Flutter Build](https://github.com/atinba/Singularity/actions/workflows/flutter-nix.yml/badge.svg)](https://github.com/atinba/Singularity/actions/workflows/flutter-nix.yml)
 ## Features
 
 - High Streaming Quality (320kbps AAC)
