@@ -21,12 +21,11 @@
       androidComposition = pkgs.androidenv.composeAndroidPackages {
         buildToolsVersions = ["34.0.0" "33.0.1"];
         platformVersions = ["34" "33" "31"];
-        abiVersions = ["arm64-v8a" "x86_64"];
+        abiVersions = [];
         includeNDK = true;
         ndkVersions = ["21.4.7075529"];
         cmakeVersions = ["3.22.1"];
-        includeSystemImages = true;
-        systemImageTypes = ["google_apis"];
+        includeSystemImages = false;
         includeEmulator = false;
         useGoogleAPIs = false;
         extraLicenses = [
@@ -57,7 +56,6 @@
           buildInputs = [
             flutter
             androidSdk
-            qemu_kvm
             gradle
             jdk17
           ];
