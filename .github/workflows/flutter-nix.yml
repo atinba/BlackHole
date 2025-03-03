@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+    - build
     - gh_flake
 
 jobs:
@@ -23,6 +24,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Restore Nix store from cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            /nix/store
+            /nix/var/nix/db
+          key: nix-store-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-keys: |
+            nix-store-${{ runner.os }}-
+            
       - uses: cachix/install-nix-action@v30
       # Setup the flutter environment.
       # - uses: nicknovitski/nix-develop@v1
@@ -40,6 +51,14 @@ jobs:
 
       # Build apk.
       - run: nix develop --command flutter build apk --release --split-per-abi
+      
+      - name: Save Nix store
+        uses: actions/cache@v4
+        with:
+          path: |
+            /nix/store
+            /nix/var/nix/db
+          key: nix-store-${{ runner.os }}-${{ hashFiles('flake.lock') }}
 
       # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v4
