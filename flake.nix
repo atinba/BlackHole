@@ -57,7 +57,6 @@
           buildInputs = [
             flutter
             androidSdk
-            android-studio
             qemu_kvm
             gradle
             jdk17
