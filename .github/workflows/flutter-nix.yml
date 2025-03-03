@@ -14,29 +14,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Gradle cache for faster builds
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      # # Gradle cache for faster builds
+      # - uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       ~/.gradle/caches
+      #       ~/.gradle/wrapper
+      #     key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-gradle-
 
-      - name: Restore Nix store from cache
-        uses: actions/cache@v4
+      - uses: nixbuild/nix-quick-install-action@v29
+      
+      - uses: nix-community/cache-nix-action@v6
         with:
-          path: |
-            /nix/store
-            /nix/var/nix/db
-          key: nix-store-${{ runner.os }}-${{ hashFiles('flake.lock') }}
-          restore-keys: |
-            nix-store-${{ runner.os }}-
-            
-      - uses: cachix/install-nix-action@v30
-      # Setup the flutter environment.
-      # - uses: nicknovitski/nix-develop@v1
+          # restore and save a cache using this key
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('**/*.nix', '**/flake.lock') }}
+          # if there's no cache hit, restore a cache by this prefix
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          # collect garbage until Nix store size (in bytes) is at most this number
+          # before trying to save a new cache
+          # 1 GB = 1073741824 B
+          gc-max-store-size-linux: 1073741824
+          # do purge caches
+          purge: true
+          # purge all versions of the cache
+          purge-prefixes: nix-${{ runner.os }}-
+          # created more than this number of seconds ago relative to the start of the `Post Restore` phase
+          purge-created: 0
+          # except the version with the `primary-key`, if it exists
+          purge-primary-key: never
       
       - run: nix develop --command flutter pub get
 
@@ -51,14 +58,6 @@ jobs:
 
       # Build apk.
       # - run: nix develop --command flutter build apk --release --split-per-abi
-      
-      - name: Save Nix store
-        uses: actions/cache@v4
-        with:
-          path: |
-            /nix/store
-            /nix/var/nix/db
-          key: nix-store-${{ runner.os }}-${{ hashFiles('flake.lock') }}
 
       # # Upload generated apk to the artifacts.
       # - uses: actions/upload-artifact@v4
