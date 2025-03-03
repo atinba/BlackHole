@@ -216,7 +216,9 @@ class _SongTileTrailingMenuState extends State<SongTileTrailingMenu> {
             playNext(mediaItem, context);
           default:
             final artistInfo = await SaavnAPI().getArtistDetails(
-                mediaItem.extras?['album_id'] as String, value.toString(),);
+              mediaItem.extras?['album_id'] as String,
+              value.toString(),
+            );
             Navigator.push(
               context,
               PageRouteBuilder(
@@ -227,7 +229,6 @@ class _SongTileTrailingMenuState extends State<SongTileTrailingMenu> {
                 ),
               ),
             );
-            break;
         }
       },
     );

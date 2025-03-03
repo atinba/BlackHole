@@ -788,7 +788,8 @@ class SaavnAPI {
         (await getArtistsFromAlbumId(albumId))['primary_artists'] as List;
 
     final artistInfo = primaryArtists.firstWhere(
-        (artist) => artist['name'].toString().trim() == artistName,) as Map;
+      (artist) => artist['name'].toString().trim() == artistName,
+    ) as Map;
     artistInfo['title'] = artistInfo['name'];
 
     return artistInfo;

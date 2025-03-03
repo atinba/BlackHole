@@ -471,7 +471,9 @@ class LyricReaderState extends State<LyricsReader>
     if (!widget.ui.enableHighlight() ||
         widget.playing == null ||
         widget.model.isNullOrEmpty ||
-        lyricPaint.playingIndex >= lyrics!.length) return;
+        lyricPaint.playingIndex >= lyrics!.length) {
+      return;
+    }
     var line = lyrics[lyricPaint.playingIndex];
     List<TweenSequenceItem> items = [];
     var width = 0.0;

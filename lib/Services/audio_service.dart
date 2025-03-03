@@ -157,7 +157,7 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
     resetOnSkip =
         Hive.box('settings').get('resetOnSkip', defaultValue: false) as bool;
     cacheSong =
-        Hive.box('settings').get('cacheSong', defaultValue: false) as bool;
+        Hive.box('settings').get('cacheSong', defaultValue: true) as bool;
     recommend =
         Hive.box('settings').get('autoplay', defaultValue: false) as bool;
     loadStart =
@@ -545,7 +545,7 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
         .get('streamingQuality', defaultValue: '96 kbps')
         .toString();
     cacheSong =
-        Hive.box('settings').get('cacheSong', defaultValue: false) as bool;
+        Hive.box('settings').get('cacheSong', defaultValue: true) as bool;
     useDown = Hive.box('settings').get('useDown', defaultValue: true) as bool;
     return mediaItems.map(_itemToSource).whereType<AudioSource>().toList();
   }
@@ -1011,7 +1011,9 @@ class AudioPlayerHandlerImpl extends BaseAudioHandler
     Logger.root.severe('Playback Error from audioservice: ${err.code}', err);
     if (err is PlatformException &&
         err.code == 'abort' &&
-        err.message == 'Connection aborted') return;
+        err.message == 'Connection aborted') {
+      return;
+    }
     _onError(err, null);
   }
 

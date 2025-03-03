@@ -239,7 +239,6 @@ class _DownloadedSongsState extends State<DownloadedSongs>
         _songs.sort(
           (a, b) => a.dateAdded.toString().compareTo(b.dateAdded.toString()),
         );
-        break;
     }
 
     if (order == 1) {

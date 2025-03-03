@@ -259,7 +259,6 @@ class _SongsListPageState extends State<SongsListPage> {
             'Error: Unsupported Type ${widget.listItem['type']}',
             duration: const Duration(seconds: 3),
           );
-          break;
       }
     } catch (e) {
       setState(() {

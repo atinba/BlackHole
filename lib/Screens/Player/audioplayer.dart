@@ -2117,8 +2117,9 @@ class NameNControls extends StatelessWidget {
                       );
                     } else {
                       final artistInfo = await SaavnAPI().getArtistDetails(
-                          mediaItem.extras?['album_id'] as String,
-                          value,);
+                        mediaItem.extras?['album_id'] as String,
+                        value,
+                      );
                       Navigator.push(
                         context,
                         PageRouteBuilder(

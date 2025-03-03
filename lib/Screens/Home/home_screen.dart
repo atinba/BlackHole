@@ -20,7 +20,6 @@
 import 'dart:math';
 
 import 'package:blackhole/CustomWidgets/drawer.dart';
-import 'package:blackhole/CustomWidgets/textinput_dialog.dart';
 import 'package:blackhole/Screens/Home/saavn.dart';
 import 'package:blackhole/Screens/Search/search.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String name =
+    final String name =
         Hive.box('settings').get('name', defaultValue: 'Guest') as String;
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final bool rotated = MediaQuery.sizeOf(context).height < screenWidth;

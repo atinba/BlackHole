@@ -215,7 +215,6 @@ class _DownloadsState extends State<Downloads>
               .toUpperCase()
               .compareTo(b['dateAdded'].toString().toUpperCase()),
         );
-        break;
     }
 
     if (order == 1) {
@@ -272,7 +271,6 @@ class _DownloadsState extends State<Downloads>
             .sort((b, a) => _artists[a]!.length.compareTo(_artists[b]!.length));
         _sortedGenreKeysList
             .sort((b, a) => _genres[a]!.length.compareTo(_genres[b]!.length));
-        break;
     }
   }
 
