@@ -1,0 +1,46 @@
+name: Flutter Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - build
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache.outputs.cache-primary-key }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@v29
+
+      - name: Setup Cache
+        uses: nix-community/cache-nix-action@v6
+        with:
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('**/*.nix', '**/flake.lock') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          gc-max-store-size-linux: 1073741824
+          purge: true
+          purge-prefixes: nix-${{ runner.os }}-
+          purge-created: 0
+          purge-primary-key: never
+
+      - name: Install Dependencies
+        run: nix develop --command flutter pub get
+
+      - name: Build APK
+        run: nix develop --command flutter build apk --release --split-per-abi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-arm64-v8a-release.apk
+          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-armeabi-v7a-release.apk
+          path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
