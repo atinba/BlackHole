@@ -1,6 +1,10 @@
 name: Flutter Build (Nix Flake Version)
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - gh_flake
 
 jobs:
   build:
