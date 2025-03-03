@@ -4,68 +4,87 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - build
-    - gh_flake
+      - build
+      - gh_flake
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
-
+    outputs:
+      cache-key: ${{ steps.cache.outputs.cache-primary-key }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      # # Gradle cache for faster builds
-      # - uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/.gradle/caches
-      #       ~/.gradle/wrapper
-      #     key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-gradle-
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@v29
 
-      - uses: nixbuild/nix-quick-install-action@v29
-      
       - uses: nix-community/cache-nix-action@v6
         with:
-          # restore and save a cache using this key
           primary-key: nix-${{ runner.os }}-${{ hashFiles('**/*.nix', '**/flake.lock') }}
-          # if there's no cache hit, restore a cache by this prefix
           restore-prefixes-first-match: nix-${{ runner.os }}-
-          # collect garbage until Nix store size (in bytes) is at most this number
-          # before trying to save a new cache
-          # 1 GB = 1073741824 B
           gc-max-store-size-linux: 1073741824
-          # do purge caches
           purge: true
-          # purge all versions of the cache
           purge-prefixes: nix-${{ runner.os }}-
-          # created more than this number of seconds ago relative to the start of the `Post Restore` phase
           purge-created: 0
-          # except the version with the `primary-key`, if it exists
           purge-primary-key: never
-      
-      - run: nix develop --command flutter pub get
 
-      # Check for any formatting issues in the code.
-      # - run: dart format --set-exit-if-changed .
+  dependencies:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Install Dependencies
+        run: nix develop --command flutter pub get
 
-      # # Statically analyze the Dart code for any errors.
-      # - run: flutter analyze .
+  format-check:
+    runs-on: ubuntu-latest
+    needs: dependencies
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      # # Run widget tests for our flutter project.
-      # - run: flutter test
+      - name: Check Code Formatting
+        run: dart format --set-exit-if-changed .
 
-      # Build apk.
-      # - run: nix develop --command flutter build apk --release --split-per-abi
+  analyze:
+    runs-on: ubuntu-latest
+    needs: dependencies
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      # # Upload generated apk to the artifacts.
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: app-arm64-v8a-release.apk
-      #     path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+      - name: Static Code Analysis
+        run: flutter analyze
 
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: app-armeabi-v7a-release.apk
-      #     path: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
+  build:
+    runs-on: ubuntu-latest
+    needs: dependencies
+    outputs:
+      apk_arm64: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+      apk_armeabi: build/app/outputs/apk/release/app-armeabi-v7a-release.apk
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build APK
+        run: nix develop --command flutter build apk --release --split-per-abi
+
+      - name: Save APK Paths
+        id: apk_paths
+        run: echo "apk_arm64=build/app/outputs/apk/release/app-arm64-v8a-release.apk" >> $GITHUB_ENV && echo "apk_armeabi=build/app/outputs/apk/release/app-armeabi-v7a-release.apk" >> $GITHUB_ENV
+
+  upload-artifacts:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Upload APK (arm64-v8a)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-arm64-v8a-release.apk
+          path: ${{ needs.build.outputs.apk_arm64 }}
+
+      - name: Upload APK (armeabi-v7a)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-armeabi-v7a-release.apk
+          path: ${{ needs.build.outputs.apk_armeabi }}
