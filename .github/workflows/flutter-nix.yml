@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - build
-      - gh_flake
 
 jobs:
   Build:
@@ -30,10 +29,11 @@ jobs:
           purge-created: 0
           purge-primary-key: never
 
-      
-      - uses: nicknovitski/nix-develop@v1
-      - run: flutter pub get
-      - run: flutter build apk --release --split-per-abi
+      - name: Install Dependencies
+        run: nix develop --command flutter pub get
+
+      - name: Build APK
+        run: nix develop --command flutter build apk --release --split-per-abi
 
       - uses: actions/upload-artifact@v4
         with:
