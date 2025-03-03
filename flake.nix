@@ -19,16 +19,16 @@
       };
 
       androidComposition = pkgs.androidenv.composeAndroidPackages {
-        buildToolsVersions = ["35.0.0" "34.0.0" "33.0.1" "30.0.3"];
-        platformVersions = ["35" "34" "33" "32" "31"];
+        buildToolsVersions = ["34.0.0" "33.0.1"];
+        platformVersions = ["34" "33" "31"];
         abiVersions = ["arm64-v8a" "x86_64"];
         includeNDK = true;
         ndkVersions = ["21.4.7075529"];
         cmakeVersions = ["3.22.1"];
         includeSystemImages = true;
-        systemImageTypes = ["google_apis"];# "google_apis_playstore"];
-        includeEmulator = true;
-        useGoogleAPIs = true;
+        systemImageTypes = ["google_apis"];
+        includeEmulator = false;
+        useGoogleAPIs = false;
         extraLicenses = [
           "android-googletv-license"
           "android-sdk-arm-dbt-license"
